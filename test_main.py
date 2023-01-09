@@ -1,4 +1,4 @@
-import main from *
+from main import *
 
 
 
