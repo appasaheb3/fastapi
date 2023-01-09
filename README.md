@@ -30,10 +30,16 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/appasaheb3/fastapi.git']])
             }
         }
+        
         stage('Build') {
             steps {
                 git branch :'main',url:'https://github.com/appasaheb3/fastapi.git'
                 sh 'python3 main.py'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('Test') {
@@ -43,5 +49,4 @@ pipeline {
         }
     }
 }
-
 ```
