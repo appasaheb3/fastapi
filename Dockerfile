@@ -1,9 +1,6 @@
-FROM ubuntu:latest
+FROM python:3.8.16
 
 WORKDIR /app
-
-USER root
-RUN apt install python3-pip
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
