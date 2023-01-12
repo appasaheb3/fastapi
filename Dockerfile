@@ -1,4 +1,4 @@
-FROM python:3.8.16
+FROM ubuntu:latest
 
 WORKDIR /app
 
