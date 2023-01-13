@@ -64,22 +64,33 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 ```sudo apt-get update```
 
 ```sudo chmod a+r /etc/apt/keyrings/docker.gpg
-sudo apt-get update```
+sudo apt-get update
+```
 
 ```
-#verify
+# verify
 sudo docker run hello-world
 ```
 
 
 ### Jenkins With Docker
-*Note: Set permission if not working*
-```sudo groupadd docker```
-```usermod -aG docker jenkins```
-```usermod -aG root jenkins```
-```chmod 664 /var/run/docker.sock```
-```#still not working then check with
-reboot```
+*Note:Set permission if not working*
+```
+sudo groupadd docker
+```
+```
+usermod -aG docker jenkins
+```
+```
+usermod -aG root jenkins
+```
+```
+chmod 664 /var/run/docker.sock
+```
+```
+# still not working then check with
+reboot
+```
 
 
 ### Docker Image Build and Push on hub
