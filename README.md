@@ -47,3 +47,66 @@ pipeline {
     }
 }
 ```
+
+
+### Docker Installation on Ubuntu
+*https://docs.docker.com/engine/install/ubuntu/*
+```
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg lsb-release
+```
+```
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+```echo  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null```
+
+```sudo apt-get update```
+
+```sudo chmod a+r /etc/apt/keyrings/docker.gpg
+sudo apt-get update```
+
+```
+#verify
+sudo docker run hello-world
+```
+
+
+### Jenkins With Docker
+*Note: Set permission if not working*
+```sudo groupadd docker```
+```usermod -aG docker jenkins```
+```usermod -aG root jenkins```
+```chmod 664 /var/run/docker.sock```
+```#still not working then check with
+reboot```
+
+
+### Docker Image Build and Push on hub
+```
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/appasaheb3/fastapi.git']])
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build -t fastapi .'
+            }
+        }
+        stage('Push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                    sh 'echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin' 
+                    sh 'docker push appasaheb3/fastapi'
+                }
+            }
+        }
+        
+        
+    }
+}
+```
