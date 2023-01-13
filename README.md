@@ -94,6 +94,7 @@ reboot
 
 
 ### Docker Image Build and Push on hub
+*Add Ussername and Password of Docker and Give uniq ID* 
 ```
 pipeline {
     agent any
